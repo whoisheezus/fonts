@@ -32,7 +32,10 @@ export async function GET(request: NextRequest) {
         return new NextResponse(buffer, {
             headers: {
                 'Content-Type': contentType,
-                'Cache-Control': 'public, max-age=31536000',
+                // Полностью запрещаем кеширование везде, включая Netlify Edge и браузер
+                'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+                'CDN-Cache-Control': 'no-store',
+                'Netlify-CDN-Cache-Control': 'no-store',
                 'Access-Control-Allow-Origin': '*'
             }
         });
